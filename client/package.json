@@ -20,6 +20,7 @@
     "vuetify": "^2.2.29"
   },
   "devDependencies": {
+    "@mdi/font": "^5.2.45",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.2.1",

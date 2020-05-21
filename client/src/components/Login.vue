@@ -9,9 +9,9 @@
         <v-toolbar
         color="cyan"
         dark
-        class="ma-2"
+        class="ma-2 mt-2"
         >
-          <v-card-title>Register</v-card-title>
+          <v-card-title>Login</v-card-title>
         </v-toolbar>
           <div class="d-grid pa-5">
             <v-text-field
@@ -28,8 +28,8 @@
             <v-spacer></v-spacer>
               <div class="error" v-html="error" />
             <v-spacer></v-spacer>
-            <v-card-actions class="justify-center p-2">
-              <v-btn class="cyan" @click="register">Register</v-btn>
+            <v-card-actions class="justify-center">
+              <v-btn class="cyan" @click="login">Login</v-btn>
             </v-card-actions>
           </div>
       </v-card>
@@ -48,9 +48,9 @@ export default {
     }
   },
   methods: {
-    async register () {
+    async login () {
       try {
-        await AuthenticationService.register({
+        await AuthenticationService.login({
           email: this.email,
           password: this.password
         })
