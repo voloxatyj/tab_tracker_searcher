@@ -14,17 +14,33 @@
           <v-card-title>Login</v-card-title>
         </v-toolbar>
           <div class="d-grid pa-5">
-            <v-text-field
-              label="email"
-              v-model="email"
-              placeholder="email"
-            ></v-text-field>
-            <v-spacer></v-spacer>
-            <v-text-field
-              label="password"
-              v-model="password"
-              placeholder="password"
-            ></v-text-field>
+            <form
+              name="tab-tracker-form"
+              autocomplete="off"
+            >
+              <v-text-field
+                label="email"
+                v-model="email"
+                placeholder="email"
+                outlined
+                solo
+                clearable
+              ></v-text-field>
+              <v-spacer></v-spacer>
+              <v-text-field
+                label="password"
+                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                counter="8"
+                :type="show ? 'text' : 'password'"
+                v-model="password"
+                placeholder="password"
+                autocomplete="new-password"
+                outlined
+                solo
+                clearable
+                @click:append="show = !show"
+              ></v-text-field>
+            </form>
             <v-spacer></v-spacer>
               <div class="error" v-html="error" />
             <v-spacer></v-spacer>
@@ -44,7 +60,8 @@ export default {
     return {
       email: '',
       password: '',
-      error: null
+      error: null,
+      show: false
     }
   },
   methods: {

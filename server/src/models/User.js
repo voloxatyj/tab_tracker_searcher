@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) => 
-	sequelize.define('User', {
+module.exports = (sequelize, DataTypes) => {
+	const User = sequelize.define('User', {
 		email: {
 			type: DataTypes.STRING,
 			unique: true
@@ -8,3 +8,5 @@ module.exports = (sequelize, DataTypes) =>
 	}, {
 		freezeTableName: true
 	})
+	return User
+}
