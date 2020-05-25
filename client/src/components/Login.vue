@@ -30,7 +30,6 @@
               <v-text-field
                 label="password"
                 :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                counter="8"
                 :type="show ? 'text' : 'password'"
                 v-model="password"
                 placeholder="password"
@@ -48,6 +47,9 @@
               <v-btn class="cyan" @click="login">Login</v-btn>
             </v-card-actions>
           </div>
+            <small>don’t have an account?
+              <router-link to="register">go here</router-link>
+            </small>
       </v-card>
     </v-flex>
   </v-layout>
@@ -67,10 +69,12 @@ export default {
   methods: {
     async login () {
       try {
-        await AuthenticationService.login({
+        const res = await AuthenticationService.login({
           email: this.email,
           password: this.password
         })
+        this.$store.dispatch('setToken', res.data.token)
+        this.$store.dispatch('setUser', res.data.user)
       } catch (error) {
         this.error = error.response.data.error
       }

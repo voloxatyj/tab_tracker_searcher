@@ -2,7 +2,7 @@
   <div id="app">
     <div class="appclass">
       <v-app dense>
-        <v-app-bar>
+        <v-app-bar height="100px">
           <page-header />
         </v-app-bar>
         <main>

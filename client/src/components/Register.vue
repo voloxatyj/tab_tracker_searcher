@@ -31,7 +31,7 @@
               <v-text-field
                 label="password"
                 :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                counter="8"
+                counter="!8"
                 ref="password"
                 :rules="[rules.password]"
                 :type="show ? 'text' : 'password'"
@@ -75,10 +75,12 @@ export default {
   methods: {
     async register () {
       try {
-        await AuthenticationService.register({
+        const res = await AuthenticationService.register({
           email: this.email,
           password: this.password
         })
+        this.$store.dispatch('setToken', res.data.token)
+        this.$store.dispatch('setUser', res.data.user)
       } catch (error) {
         this.error = error.response.data.error
       }

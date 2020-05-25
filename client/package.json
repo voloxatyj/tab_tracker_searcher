@@ -17,10 +17,12 @@
     "axios": "^0.19.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
-    "vuetify": "^2.2.29"
+    "vuetify": "^2.2.29",
+    "vuex": "^3.4.0",
+    "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
-    "@mdi/font": "^5.2.45",
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.2.1",

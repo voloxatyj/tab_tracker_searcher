@@ -1,10 +1,11 @@
 <template>
   <v-toolbar
     color="indigo lighten-1"
-    dense
+    height="70px"
     flat
     fixed
     dark
+    rounded
   >
     <v-icon class="white--text mr-5">mdi-album</v-icon>
       <v-toolbar-title class="white--text">
@@ -19,25 +20,51 @@
     <v-toolbar-items>
       <v-tooltip bottom transition color="cyan">
         <template v-slot:activator="{ on }">
-          <v-btn outlined small v-on="on" @click="navigateTo({name: 'register'})">
-            <v-icon class="white--text">mdi mdi-account-plus</v-icon>
+          <v-btn
+            outlined
+            small
+            v-on="on"
+            @click="navigateTo({name: 'register'})"
+            class="mr-2"
+            v-if="!$store.state.isLoggedIn"
+          >
+            <v-icon class="white--text">fas fa-user-plus</v-icon>
           </v-btn>
         </template>
         <span>SignUp</span>
       </v-tooltip>
-      <v-tooltip bottom transition color="cyan">
+      <v-tooltip bottom transition color="cyan" v-if="!$store.state.isLoggedIn">
         <template v-slot:activator="{ on }">
-          <v-btn outlined small v-on="on" @click="navigateTo({name: 'login'})">
-            <v-icon class="white--text">mdi mdi-account-key</v-icon>
+          <v-btn
+           outlined
+           small
+           v-on="on"
+           @click="navigateTo({name: 'login'})"
+          >
+            <v-icon class="white--text" >fas fa-user-check</v-icon>
           </v-btn>
         </template>
         <span>LogIn</span>
+      </v-tooltip>
+      <v-tooltip bottom transition color="cyan" v-else>
+        <template v-slot:activator="{ on }">
+          <v-btn
+           outlined
+           small
+           v-on="on"
+           @click="navigateTo({name: 'login'})"
+          >
+            <v-icon class="white--text" >fas fa-user-alt-slash</v-icon>
+          </v-btn>
+        </template>
+        <span>LogOut</span>
       </v-tooltip>
     </v-toolbar-items>
   </v-toolbar>
 </template>
 
 <script>
+
 export default {
   methods: {
     navigateTo (route) {
@@ -59,7 +86,8 @@ export default {
 }
 .v-btn {
   border-radius: 50%!important;
-  border-color: #3949AB;
+  border-color: whitesmoke;
+  padding: 7px!important;
 }
 .v-btn:hover {
   color:cyan;
