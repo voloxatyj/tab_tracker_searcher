@@ -29,7 +29,7 @@
               <v-spacer></v-spacer>
               <v-text-field
                 label="password"
-                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                :append-icon="show ? 'far fa-eye' : 'far fa-eye-slash'"
                 :type="show ? 'text' : 'password'"
                 v-model="password"
                 placeholder="password"
@@ -58,28 +58,28 @@
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
 export default {
-  data () {
-    return {
-      email: '',
-      password: '',
-      error: null,
-      show: false
-    }
-  },
-  methods: {
-    async login () {
-      try {
-        const res = await AuthenticationService.login({
-          email: this.email,
-          password: this.password
-        })
-        this.$store.dispatch('setToken', res.data.token)
-        this.$store.dispatch('setUser', res.data.user)
-      } catch (error) {
-        this.error = error.response.data.error
-      }
-    }
-  }
+	data () {
+		return {
+			email: '',
+			password: '',
+			error: null,
+			show: false
+		}
+	},
+	methods: {
+		async login () {
+			try {
+				const res = await AuthenticationService.login({
+					email: this.email,
+					password: this.password
+				})
+				this.$store.dispatch('setToken', res.data.token)
+				this.$store.dispatch('setUser', res.data.user)
+			} catch (error) {
+				this.error = error.response.data.error
+			}
+		}
+	}
 }
 </script>
 

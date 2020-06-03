@@ -30,10 +30,10 @@
               <v-spacer></v-spacer>
               <v-text-field
                 label="password"
-                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                 counter="!8"
                 ref="password"
                 :rules="[rules.password]"
+                :append-icon="show ? 'far fa-eye' : 'far fa-eye-slash'"
                 :type="show ? 'text' : 'password'"
                 v-model="password"
                 placeholder="password"
@@ -59,33 +59,33 @@
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
 export default {
-  data () {
-    return {
-      email: '',
-      password: '',
-      error: null,
-      show: false,
-      rules: {
-        requiredEmail: value => new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(value) ||
+	data () {
+		return {
+			email: '',
+			password: '',
+			error: null,
+			show: false,
+			rules: {
+				requiredEmail: value => new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(value) ||
         'Provide a valid email address',
-        password: value => new RegExp('^[a-zA-Z0-9]{8,32}$').test(value) || 'It must contain: lower case, upper case, numerics characters.'
-      }
-    }
-  },
-  methods: {
-    async register () {
-      try {
-        const res = await AuthenticationService.register({
-          email: this.email,
-          password: this.password
-        })
-        this.$store.dispatch('setToken', res.data.token)
-        this.$store.dispatch('setUser', res.data.user)
-      } catch (error) {
-        this.error = error.response.data.error
-      }
-    }
-  }
+				password: value => new RegExp('^[a-zA-Z0-9]{8,32}$').test(value) || 'It must contain: lower case, upper case, numerics characters.'
+			}
+		}
+	},
+	methods: {
+		async register () {
+			try {
+				const res = await AuthenticationService.register({
+					email: this.email,
+					password: this.password
+				})
+				this.$store.dispatch('setToken', res.data.token)
+				this.$store.dispatch('setUser', res.data.user)
+			} catch (error) {
+				this.error = error.response.data.error
+			}
+		}
+	}
 }
 </script>
 

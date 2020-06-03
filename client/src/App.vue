@@ -10,6 +10,7 @@
             <router-view></router-view>
           </v-container>
         </main>
+        <Footer />
       </v-app>
     </div>
   </div>
@@ -17,11 +18,14 @@
 
 <script>
 import PageHeader from '@/components/Header.vue'
+import Footer from '@/components/Footer.vue'
+
 export default {
-  name: 'app',
-  components: {
-    PageHeader
-  }
+	name: 'app',
+	components: {
+		PageHeader,
+		Footer
+	}
 }
 </script>
 
@@ -34,5 +38,8 @@ export default {
 }
 .v-application--wrap {
   min-height: 10vh !important;
+}
+i {
+  cursor: pointer;
 }
 </style>

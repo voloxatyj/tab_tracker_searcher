@@ -8,20 +8,23 @@ import 'vuetify/dist/vuetify.min.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import { sync } from 'vuex-router-sync'
 import store from './store/store'
+import Animate from 'animate.css'
 
 Vue.config.productionTip = false
 
 Vue.use(Vuetify)
 
+Vue.use(Animate)
+
 sync(store, router)
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  store,
-  iconfont: 'fa',
-  components: { App },
-  template: '<App/>',
-  vuetify: new Vuetify()
+	el: '#app',
+	router,
+	store,
+	iconfont: 'fa',
+	components: { App },
+	template: '<App/>',
+	vuetify: new Vuetify()
 })
