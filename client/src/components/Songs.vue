@@ -27,59 +27,68 @@
           cols="12"
         >
          <v-hover>
-            <template v-slot="{ hover }">
+            <template>
               <v-card
                 shaped
                 max-height="150"
-                :class="`animate__animated ${hover ? 'animate__rubberBand' : 'animate__backInUp'} animate__delay-${i/chartSongs.length}s`"
-                class="cyan lighten-4 elevation-12"
+                :class="`cyan lighten-4 elevation-12 animate__animated animate__backInUp animate__delay-${i/chartSongs.length}s`"
               >
                 <div class="d-flex flex-no-wrap justify-space-between">
                   <div class="titleSong indigo--text">
-                    <div class="d-inline-flex justify-space-evenly py-2 px-5">
-                      <v-icon color="grey darken-2" x-large>fas fa-hashtag</v-icon>
+                    <div class="d-inline-flex mx-5 py-2 px-5 main">
+                      <v-tooltip left>
+                        <template v-slot:activator="{ on }">
+                          <v-icon
+                           color="indigo lighten-1"
+                           class="animate__animated animate__bounce animate__delay-3s"
+                           x-large
+                           v-on="on"
+                          >
+                          fas fa-hashtag</v-icon>
+                        </template>
+                        <span>Get Lyrics</span>
+                      </v-tooltip>
                       <div>
                         <h2 class="font-italic font-weight-medium">{{item.track.track_name}}</h2>
                         <h4 class="font-weight-light grey--text text--darken-2">{{item.track.artist_name}}</h4>
                       </div>
                     </div>
                     <v-container class="d-inline-flex">
-                      <v-row no-gutters>
+                      <v-row no-gutters class="d-flex justify-center">
                         <div class="d-inline-flex album">
-                          <v-icon color="grey darken-2">fas fa-compact-disc</v-icon>
+                          <v-icon
+                           color="grey darken-2"
+                           class="animate__animated animate__bounceInDown animate__delay-2s"
+                          >
+                          fas fa-compact-disc</v-icon>
                           <v-card-text>{{item.track.album_name}}</v-card-text>
                         </div>
                       </v-row>
-                      <v-row no-gutters v-if="item.track.primary_genres.music_genre_list.length !== 0">
+                      <v-row no-gutters class="d-flex justify-center" v-if="item.track.primary_genres.music_genre_list.length !== 0">
                         <div class="d-inline-flex genres">
-                          <v-icon color="grey darken-2">fab fa-napster</v-icon>
+                          <v-icon
+                           color="grey darken-2"
+                           class="animate__animated animate__bounceInDown animate__delay-2s"
+                          >
+                          fab fa-napster</v-icon>
                           <v-card-text>{{item.track.primary_genres.music_genre_list.length === 0 ? '' : item.track.primary_genres.music_genre_list[0].music_genre.music_genre_name}}</v-card-text>
                         </div>
                       </v-row>
-                      <v-row no-gutters v-if="item.track.primary_genres.music_genre_list.length !== 0">
+                      <v-row no-gutters class="d-flex justify-center">
                         <div class="d-inline-flex likes">
-                          <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                              <v-icon
-                               color="grey darken-2"
-                               v-bind="attrs"
-                               v-on="on"
-                              >
-                              far fa-heart</v-icon>
-                            </template>
-                            <span>Likes</span>
-                          </v-tooltip>
-                          <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                              <v-icon
-                               color="blue darken-2"
-                               v-bind="attrs"
-                               v-on="on"
-                              >
-                              fas fa-heart</v-icon>
-                            </template>
-                            <span>not even think</span>
-                          </v-tooltip>
+                          <v-icon
+                          :likes="likes"
+                          v-if="likes"
+                          color="grey darken-2"
+                          class="animate__animated animate__bounceInDown animate__delay-2s"
+                          >
+                          far fa-heart</v-icon>
+                          <v-icon
+                          v-else
+                          color="blue darken-2"
+                          class="animate__animated animate__bounceInDown animate__delay-2s"
+                          >
+                          fas fa-heart</v-icon>
                         </div>
                       </v-row>
                     </v-container>
@@ -96,7 +105,12 @@
 
 <script>
 export default {
-	props: ['chartSongs', 'chartAmount', 'chartCountry']
+	props: ['chartSongs', 'chartAmount', 'chartCountry'],
+	data () {
+		return {
+			likes: true
+		}
+	}
 }
 </script>
 
@@ -106,5 +120,16 @@ export default {
 }
 .titleSong {
   width: 100%;
+}
+.hashtag {
+  padding-right: 30px;
+  cursor: pointer;
+}
+.main {
+  width:100%;
+  justify-content: space-evenly;
+}
+.v-card:last-child {
+  margin-bottom: 30px;
 }
 </style>

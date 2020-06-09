@@ -10,7 +10,9 @@
             <router-view></router-view>
           </v-container>
         </main>
-        <Footer />
+        <v-footer class="footer">
+          <Footer />
+        </v-footer>
       </v-app>
     </div>
   </div>
@@ -41,5 +43,11 @@ export default {
 }
 i {
   cursor: pointer;
+}
+.v-footer {
+  width: 100%;
+}
+.container--fluid {
+  min-height: 100vh;
 }
 </style>

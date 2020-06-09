@@ -9,7 +9,8 @@ export default new Vuex.Store({
 		token: null,
 		user: null,
 		isLoggedIn: false,
-		loading: false
+		loading: false,
+		likesTracks: []
 	},
 	mutations: {
 		initLoading (state) {
