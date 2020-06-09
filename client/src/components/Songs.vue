@@ -1,201 +1,110 @@
 <template>
-	<v-layout class="pt-5">
-		<v-flex xs6 offset-xs3>
-			<v-card class="mx-auto" max-width="1000" raised>
-				<v-toolbar color="cyan" dark class="ma-2">
-					<v-card-title>Songs</v-card-title>
-					<v-spacer></v-spacer>
-					<div class="items">
-						<v-menu bottom origin="center center" transition="scale-transition">
-							<template v-slot:activator="{ on }">
-								<v-btn color="blue darken-2" class="animate__animated animate__flipInX animate__delay-4s" dark small v-on="on" fab>
-									<v-icon>fas fa-globe</v-icon>
-								</v-btn>
-							</template>
-							<v-list light class="list">
-								<v-list-item
-									class="item"
-									v-for="(item, i) in countries"
-									:key="i"
-									@click="getCountry(item.title)"
-								>
-									<v-list-item-title class="primary--text">{{
-										item.title
-									}}</v-list-item-title>
-								</v-list-item>
-							</v-list>
-						</v-menu>
-						<v-menu bottom origin="center center" transition="scale-transition">
-							<template v-slot:activator="{ on }">
-								<v-btn color="blue darken-2" class="animate__animated animate__flipInY animate__delay-4s" dark small v-on="on" fab>
-									<v-icon>fas fa-sort-amount-down</v-icon>
-								</v-btn>
-							</template>
-							<v-list light class="list">
-								<v-list-item
-									class="item"
-									v-for="(item, i) in amounts"
-									:key="i"
-									@click="getAmount(item.title)"
-								>
-									<v-list-item-title class="primary--text">{{
-										item.title
-									}}</v-list-item-title>
-								</v-list-item>
-							</v-list>
-						</v-menu>
-					</div>
-				</v-toolbar>
-				<div class="d-grid pa-5">
-					<v-btn color="grey lighten-2" class="animate__animated animate__zoomInUp animate__delay-5s" dark x-large fab @click="getAllSongs">
-						<v-icon x-large color="blue darken-2">fab fa-searchengin </v-icon>
-					</v-btn>
-					<!-- Info card - Wrong credentials -->
-						<v-dialog
-							v-model="dialog"
-							v-if="dialog"
-							:dialog="dialog"
-							width="500"
-						>
-							<v-card>
-								<v-card-title
-									class="headline grey lighten-2 grey--text"
-									primary-title
-								>
-									<h3>Information Card</h3>
-								</v-card-title>
-
-								<v-card-text>
-									<h3>
-										Please select country and number of songs you want to see):
-									</h3>
-								</v-card-text>
-
-								<v-divider></v-divider>
-
-								<v-card-actions>
-									<v-spacer></v-spacer>
-									<v-btn color="primary" text @click="dialog = false">
-										I accept
-									</v-btn>
-								</v-card-actions>
-							</v-card>
-						</v-dialog>
-					<!-- Loading card -->
-						<v-dialog
-							hide-overlay
-							persistent
-							:dialog="$store.state.loading"
-							:loading="dialog"
-							v-model="$store.state.loading"
-							width="300"
-						>
-							<v-card
-								color="indigo lighten-1"
-								dark
-							>
-								<v-card-text>
-									Please stand by
-									<v-progress-linear
-										indeterminate
-										color="white"
-										class="mb-0"
-									></v-progress-linear>
-								</v-card-text>
-							</v-card>
-						</v-dialog>
-					</div>
-			</v-card>
-		</v-flex>
-	</v-layout>
+<v-card
+    max-width="600"
+    class="mx-auto"
+  >
+	<v-container>
+      <v-row dense>
+        <v-col cols="12">
+          <v-card
+					color="cyan"
+					class="animate__animated animate__backInDown white--text d-flex justify-space-between align-center px-5"
+          style="{width:-webkit-fill-available}"
+          >
+            <v-card-title>Top {{chartAmount}} Songs from {{chartCountry}} Charts</v-card-title>
+            <v-btn
+             color="blue darken-2"
+             class="animate__animated animate__bounceInDown animate__delay-2s"
+             dark small fab
+            >
+              <v-icon>fab fa-searchengin </v-icon>
+            </v-btn>
+          </v-card>
+        </v-col>
+				<v-col
+          v-for="(item, i) in chartSongs"
+          :key="i"
+          cols="12"
+        >
+         <v-hover>
+            <template v-slot="{ hover }">
+              <v-card
+                shaped
+                max-height="150"
+                :class="`animate__animated ${hover ? 'animate__rubberBand' : 'animate__backInUp'} animate__delay-${i/chartSongs.length}s`"
+                class="cyan lighten-4 elevation-12"
+              >
+                <div class="d-flex flex-no-wrap justify-space-between">
+                  <div class="titleSong indigo--text">
+                    <div class="d-inline-flex justify-space-evenly py-2 px-5">
+                      <v-icon color="grey darken-2" x-large>fas fa-hashtag</v-icon>
+                      <div>
+                        <h2 class="font-italic font-weight-medium">{{item.track.track_name}}</h2>
+                        <h4 class="font-weight-light grey--text text--darken-2">{{item.track.artist_name}}</h4>
+                      </div>
+                    </div>
+                    <v-container class="d-inline-flex">
+                      <v-row no-gutters>
+                        <div class="d-inline-flex album">
+                          <v-icon color="grey darken-2">fas fa-compact-disc</v-icon>
+                          <v-card-text>{{item.track.album_name}}</v-card-text>
+                        </div>
+                      </v-row>
+                      <v-row no-gutters v-if="item.track.primary_genres.music_genre_list.length !== 0">
+                        <div class="d-inline-flex genres">
+                          <v-icon color="grey darken-2">fab fa-napster</v-icon>
+                          <v-card-text>{{item.track.primary_genres.music_genre_list.length === 0 ? '' : item.track.primary_genres.music_genre_list[0].music_genre.music_genre_name}}</v-card-text>
+                        </div>
+                      </v-row>
+                      <v-row no-gutters v-if="item.track.primary_genres.music_genre_list.length !== 0">
+                        <div class="d-inline-flex likes">
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon
+                               color="grey darken-2"
+                               v-bind="attrs"
+                               v-on="on"
+                              >
+                              far fa-heart</v-icon>
+                            </template>
+                            <span>Likes</span>
+                          </v-tooltip>
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon
+                               color="blue darken-2"
+                               v-bind="attrs"
+                               v-on="on"
+                              >
+                              fas fa-heart</v-icon>
+                            </template>
+                            <span>not even think</span>
+                          </v-tooltip>
+                        </div>
+                      </v-row>
+                    </v-container>
+                  </div>
+                </div>
+              </v-card>
+            </template>
+          </v-hover>
+        </v-col>
+      </v-row>
+    </v-container>
+</v-card>
 </template>
 
 <script>
-
 export default {
-	data: function () {
-		return {			songs: null,
-			countries: [
-				{ title: 'USA' },
-				{ title: 'GBR' },
-				{ title: 'UKR' },
-				{ title: 'FRA' },
-				{ title: 'JPN' }
-			],
-			amounts: [
-				{ title: '5' },
-				{ title: '10' },
-				{ title: '15' },
-				{ title: '20' }
-			],
-			country: null,
-			amount: null,
-			sheet: false,
-			dialog: false,
-			direction: 'bottom',
-			transition: 'scale-transition'
-		}
-	},
-	methods: {
-		getAmount (amount) {
-			this.amount = amount
-		},
-		getCountry (country) {
-			switch (country) {
-			case 'USA':
-				this.country = 'US'
-				break
-			case 'GBR':
-				this.country = 'GB'
-				break
-			case 'UKR':
-				this.country = 'UA'
-				break
-			case 'FRA':
-				this.country = 'FR'
-				break
-			case 'JPN':
-				this.country = 'JP'
-				break
-			default:
-				return {}
-			}
-		},
-		getAllSongs () {
-			if (this.country !== null || this.amount !== null) {
-				this.dialog = false
-				this.$store.dispatch('initLoading')
-				// return this.dialog
-				// axios.get
-				// `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/chart.tracks.get?chart_name=top&page=1&page_size=${this.amount}&country=${this.country}&f_has_lyrics=1&apikey=${config.MUSIC_MATCH_API_KEY}`
-				// .then(res => {
-				// 	this.songs = res.data
-				// })
-				// .then(() => {
-				// 	this.loading = false
-				// })
-				// .catch(err => console.log(err))
-			} else {
-				this.dialog = true
-			}
-		}
-	}
+	props: ['chartSongs', 'chartAmount', 'chartCountry']
 }
 </script>
 
 <style scoped>
-.list {
-	border: 1px solid cyan;
-}
-.items {
+.description {
 	display: inline-flex;
-	width: 30%;
-	justify-content: space-evenly;
 }
-.item:hover {
-	cursor: pointer;
-	background-color: lightcyan;
-	opacity: 0.3;
-	transition: ease-in-out;
+.titleSong {
+  width: 100%;
 }
 </style>

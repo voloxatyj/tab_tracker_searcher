@@ -14,7 +14,6 @@ export default new Vuex.Store({
 	mutations: {
 		initLoading (state) {
 			state.loading = true
-			console.log(state.loading)
 		},
 		setToken (state, token) {
 			state.token = token
@@ -24,6 +23,9 @@ export default new Vuex.Store({
 		},
 		setUser (state, user) {
 			state.user = user
+		},
+		getChartOfSongs (state) {
+			state.loading = false
 		}
 	},
 	actions: {
@@ -32,6 +34,9 @@ export default new Vuex.Store({
 		},
 		initLoading ({commit}) {
 			commit('initLoading')
+		},
+		getChartOfSongs ({commit}) {
+			commit('getChartOfSongs')
 		},
 		setUser ({commit}, user) {
 			commit('setUser', user)

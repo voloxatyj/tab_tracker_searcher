@@ -10,7 +10,7 @@
       tile
     >
       <v-card-title class="indigo lighten-1">
-        <strong class="subheading animate__animated animate__lightSpeedInRight animate__delay-1s">Get connected to my on social networks!</strong>
+        <strong class="subheading animate__animated animate__lightSpeedInRight animate__delay-1s mx-auto">Get connected to my on social networks!</strong>
 
         <v-spacer></v-spacer>
 

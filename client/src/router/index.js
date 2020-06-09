@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Register from '@/components/Register'
 import Login from '@/components/Login'
-import Songs from '@/components/Songs'
+import Finder from '@/components/Finder'
 import Root from '@/components/Root'
 
 Vue.use(Router)
@@ -25,9 +25,9 @@ export default new Router({
 			component: Login
 		},
 		{
-			path: '/songs',
-			name: 'songs',
-			component: Songs
+			path: '/finder',
+			name: 'finder',
+			component: Finder
 		}
 	]
 })

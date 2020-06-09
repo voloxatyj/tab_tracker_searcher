@@ -8,10 +8,10 @@
     dark
     rounded
   >
-      <v-toolbar-title class="white--text mr-5">
+      <v-toolbar-title class="white--text mx-5">
         <span
           @click="navigateTo({name: 'root'})"
-          class="animate__animated animate__flash animate__delay-1s animate__repeat-1 3"
+          class="animate__animated animate__jackInTheBox animate__delay-1s"
         >
         #MAD_MAN_APP
         </span>
@@ -47,7 +47,7 @@
             dark
             medium
             color="amber darken-3"
-            @click="navigateTo({name: 'songs'})"
+            @click="navigateTo({name: 'finder'})"
           >
             <v-icon>fas fa-chart-bar</v-icon>
           </v-btn>
@@ -213,6 +213,11 @@ export default {
 </script>
 
 <style scoped>
+.white--text.mx-5 {
+  display: -webkit-flex;
+  height: 100%;
+  align-items: center;
+}
 .home {
   cursor: pointer;
 }
