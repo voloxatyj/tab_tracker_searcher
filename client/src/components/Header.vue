@@ -7,6 +7,7 @@
     fixed
     dark
     rounded
+    class="py-1"
   >
       <v-toolbar-title class="white--text mx-5">
         <span

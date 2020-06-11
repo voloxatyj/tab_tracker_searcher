@@ -5,7 +5,7 @@
   >
 	<v-container>
       <v-row dense>
-        <v-col cols="12">
+        <v-col cols="12" px-5>
           <v-card
 					color="cyan"
 					class="animate__animated animate__backInDown white--text d-flex justify-space-between align-center px-5"
@@ -21,6 +21,7 @@
             </v-btn>
           </v-card>
         </v-col>
+        <Lyrics :lyrics="lyrics" :info="info" />
 				<v-col
           v-for="(item, i) in chartSongs"
           :key="i"
@@ -35,7 +36,7 @@
               >
                 <div class="d-flex flex-no-wrap justify-space-between">
                   <div class="titleSong indigo--text">
-                    <div class="d-inline-flex mx-5 py-2 px-5 main">
+                    <div class="d-inline-flex main">
                       <v-tooltip left>
                         <template v-slot:activator="{ on }">
                           <v-icon
@@ -43,6 +44,7 @@
                            class="animate__animated animate__bounce animate__delay-3s"
                            x-large
                            v-on="on"
+                           @click="getLyrics(item)"
                           >
                           fas fa-hashtag</v-icon>
                         </template>
@@ -104,11 +106,37 @@
 </template>
 
 <script>
+import axios from 'axios'
+import config from '../utilits/config'
+import Lyrics from '@/components/Lyrics'
+
 export default {
+	components: {
+		Lyrics
+	},
 	props: ['chartSongs', 'chartAmount', 'chartCountry'],
 	data () {
 		return {
-			likes: true
+			likes: true,
+			lyrics: null,
+			info: {
+				track: '',
+				artist: ''
+			}
+		}
+	},
+	methods: {
+		getLyrics (item) {
+			axios.get('https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=' + item.track.track_id + '&apikey=' + config.MUSIC_MATCH_API_KEY)
+				.then(res => {
+					this.lyrics = res.data.message.body.lyrics.lyrics_body
+					this.info.track = item.track.track_name
+					this.info.artist = item.track.artist_name
+				})
+				.then(() => {
+					this.$store.dispatch('showLyrics')
+				})
+				.catch(err => console.log(err))
 		}
 	}
 }
@@ -128,6 +156,7 @@ export default {
 .main {
   width:100%;
   justify-content: space-evenly;
+  align-items: flex-end;
 }
 .v-card:last-child {
   margin-bottom: 30px;

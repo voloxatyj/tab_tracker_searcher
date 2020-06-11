@@ -48,6 +48,6 @@ i {
   width: 100%;
 }
 .container--fluid {
-  min-height: 100vh;
+  min-height: 75vh;
 }
 </style>

@@ -10,7 +10,8 @@ export default new Vuex.Store({
 		user: null,
 		isLoggedIn: false,
 		loading: false,
-		likesTracks: []
+		likesTracks: [],
+		lyricsState: false
 	},
 	mutations: {
 		initLoading (state) {
@@ -27,6 +28,12 @@ export default new Vuex.Store({
 		},
 		getChartOfSongs (state) {
 			state.loading = false
+		},
+		showLyrics (state) {
+			state.lyricsState = true
+		},
+		notShowLyrics (state) {
+			state.lyricsState = false
 		}
 	},
 	actions: {
@@ -41,6 +48,12 @@ export default new Vuex.Store({
 		},
 		setUser ({commit}, user) {
 			commit('setUser', user)
+		},
+		showLyrics ({commit}) {
+			commit('showLyrics')
+		},
+		notShowLyrics ({commit}) {
+			commit('notShowLyrics')
 		}
 	}
 })
